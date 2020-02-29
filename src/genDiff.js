@@ -14,10 +14,14 @@ export const getParsedData = (filepath) => {
   return JSON.parse(rawData);
 };
 
-export const compareObjects = (object1, object2) => {
+export const getAllKeyes = (object1, object2) => {
   const keysOfObject1 = Object.keys(object1);
-  const uniqueKeysOfObject2 = Object.keys(object2).filter((item) => !keysOfObject1.includes(item));
-  const allUsedKeys = keysOfObject1.concat(uniqueKeysOfObject2);
+  const newKeysInObject2 = Object.keys(object2).filter((item) => !keysOfObject1.includes(item));
+  return keysOfObject1.concat(newKeysInObject2);
+};
+
+export const compareObjects = (object1, object2) => {
+  const allUsedKeys = getAllKeyes(object1, object2);
   const result = allUsedKeys.reduce((acc, item) => {
     if (_.has(object2, item)) {
       if (object2[item] === object1[item]) {
@@ -30,7 +34,6 @@ export const compareObjects = (object1, object2) => {
     }
     return `${acc}- ${item}: ${object1[item]}\n`;
   }, '');
-  console.log(result);
   return result;
 };
 
