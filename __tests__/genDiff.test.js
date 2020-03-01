@@ -1,4 +1,5 @@
-import _ from 'lodash';
+import path from 'path';
+import fs from 'fs';
 import { resolveFilePath, getParsedData, compareObjects } from '../src/genDiff';
 
 const object = {
@@ -8,22 +9,43 @@ const object = {
   main: 'dist/index.js',
 };
 
+const fixturesPath = '__fixtures__';
+
+const constructFullPath = (filename) => {
+  console.log(`${path.resolve(`${__dirname}`, '..')}`);
+  return `${path.resolve(`${__dirname}`, `../${fixturesPath}`)}/${filename}`;
+};
+
+
 test('Can a file with relative path be parsed', () => {
-  const path = resolveFilePath('__fixtures__/before.json');
-  expect(path).toBe(`${process.cwd()}/__fixtures__/before.json`);
-  const object1 = getParsedData(path);
+  const pathResult = resolveFilePath('__fixtures__/before.json');
+  const expectedPath = constructFullPath('before.json');
+  expect(pathResult).toEqual(expectedPath);
+  const object1 = getParsedData(pathResult);
+  expect(object1).toHaveProperty('name');
+  expect(object1).toMatchObject(object);
+});
+
+test('Can a file with absolute path be parsed', () => {
+  const pathResult = resolveFilePath(`${path.resolve(`${__dirname}`, '..')}/${fixturesPath}/before.json`);
+  const expectedPath = constructFullPath('before.json');
+  expect(pathResult).toEqual(expectedPath);
+  const object1 = getParsedData(pathResult);
   expect(object1).toHaveProperty('name');
   expect(object1).toMatchObject(object);
 });
 
 test('Compare objects', () => {
-  const path1 = resolveFilePath('__fixtures__/before.json');
-  const path2 = resolveFilePath('__fixtures__/after.json');
-  expect(path1).toBe(`${process.cwd()}/__fixtures__/before.json`);
-  expect(path2).toBe(`${process.cwd()}/__fixtures__/after.json`);
-  const object1 = getParsedData(path1);
-  const object2 = getParsedData(path2);
-  const expectedResult = '+ name: backend-project-lvl2+changes\n- name: backend-project-lvl2\nversion: 0.0.1\n- description: Second project for Hexlet\nmain: dist/index.js\n- low-level: test\n+ test-field: Present in after.json\n';
+  const pathResult1 = resolveFilePath('__fixtures__/before.json');
+  const pathResult2 = resolveFilePath('__fixtures__/after.json');
+  const fullPathToBefore = constructFullPath('before.json');
+  const fullPathToAfter = constructFullPath('after.json');
+  const fullPathToResult = constructFullPath('diff.txt');
+  expect(pathResult1).toEqual(fullPathToBefore);
+  expect(pathResult2).toEqual(fullPathToAfter);
+  const object1 = getParsedData(pathResult1);
+  const object2 = getParsedData(pathResult2);
+  const expectedResult = fs.readFileSync(fullPathToResult, 'utf-8');
   const compareResult = compareObjects(object1, object2);
-  expect(compareResult).toBe(expectedResult);
+  expect(compareResult).toEqual(expectedResult);
 });
