@@ -14,7 +14,7 @@ export const getParsedData = (filepath) => {
   return JSON.parse(rawData);
 };
 
-export const getAllKeyes = (object1, object2) => {
+const getAllKeyes = (object1, object2) => {
   const keysOfObject1 = Object.keys(object1);
   const newKeysInObject2 = Object.keys(object2).filter((item) => !keysOfObject1.includes(item));
   return keysOfObject1.concat(newKeysInObject2);
@@ -33,7 +33,7 @@ const getDiffForCurrentKey = (object1, object2, item) => {
   return `- ${item}: ${object1[item]}\n`;
 };
 
-export const compareObjects = (object1, object2) => {
+const compareObjects = (object1, object2) => {
   const allUsedKeys = getAllKeyes(object1, object2);
   const result = allUsedKeys.reduce((acc, key) => `${acc}${getDiffForCurrentKey(object1, object2, key)}`, '');
   return result;
