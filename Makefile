@@ -11,7 +11,7 @@ publish:
 
 build:
 		rm -rf
-		npm run build
+		npm build
 
 lint:
 		npx eslint src/.
@@ -21,6 +21,3 @@ gendiff:
 
 test-coverage:
 		npx jest --collect-coverage
-
-test:
-		npx jest --watch
