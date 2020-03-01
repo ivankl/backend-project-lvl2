@@ -1,0 +1,6 @@
+{
+  "name": "backend-project-lvl2+changes",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "test-field": "Present in after.json"
+}

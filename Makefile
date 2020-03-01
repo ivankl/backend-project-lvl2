@@ -10,7 +10,13 @@ publish:
 	npm publish --dry-run
 
 lint:
-		npx eslint src/.
+	npx eslint src/.
 
-make gendiff:
-		npx babel-node src/bin/gendiff.js
+gendiff:
+	npx babel-node src/bin/gendiff.js
+
+test-coverage:
+	npx jest --collect-coverage
+
+test:
+	npx jest --watch
