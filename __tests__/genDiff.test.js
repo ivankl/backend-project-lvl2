@@ -16,14 +16,6 @@ test('Can a file with relative path be parsed', () => {
   expect(object1).toMatchObject(object);
 });
 
-test('Can a file with absolute path be parsed', () => {
-  const path = resolveFilePath('/Users/ivan/before.json');
-  expect(path).toBe('/Users/ivan/before.json');
-  const object1 = getParsedData(path);
-  expect(object1).toHaveProperty('name');
-  expect(object1).toMatchObject(object);
-});
-
 test('Compare objects', () => {
   const path1 = resolveFilePath('__fixtures__/before.json');
   const path2 = resolveFilePath('__fixtures__/after.json');
