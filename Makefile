@@ -1,14 +1,17 @@
 # Makefile
 
 install:
-		npm install --save-dev @babel/core @babel/cli @babel/node @babel/preset-env @babel/register eslint eslint-config-airbnb-base eslint-plugin-babel babel-eslint eslint-plugin-import
+		install-deps
 
 publish:
 		npm publish --dry-run
 
+install-deps:
+			npm ci
+
 build:
 		rm -rf
-		npm build
+		npm run build
 
 lint:
 		npx eslint src/.
