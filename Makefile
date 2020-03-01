@@ -1,13 +1,10 @@
 # Makefile
 
 install:
-		install-deps
+		npm ci
 
 publish:
 		npm publish --dry-run
-
-install-deps:
-			npm ci
 
 build:
 		rm -rf
