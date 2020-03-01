@@ -20,3 +20,6 @@ test-coverage:
 
 test:
 	npx jest --watch
+
+build:
+	npm run build
