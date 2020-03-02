@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import getParsedJSONdata from './parsers/JSONparser';
-import { constructFilePath, getRawData } from './utils';
+import getParsedData from './parsers';
+import { constructFilePath, getRawData, getFileExtension } from './utils';
 
 const getAllKeyes = (object1, object2) => {
   const keysOfObject1 = Object.keys(object1);
@@ -30,7 +30,7 @@ const compareObjects = (object1, object2) => {
 export default (path1, path2) => {
   const rawDataFromFile1 = getRawData(constructFilePath(path1));
   const rawDataFromFile2 = getRawData(constructFilePath(path2));
-  const objectFromFile1 = getParsedJSONdata(rawDataFromFile1);
-  const objectFromFile2 = getParsedJSONdata(rawDataFromFile2);
+  const objectFromFile1 = getParsedData(rawDataFromFile1, getFileExtension(path1));
+  const objectFromFile2 = getParsedData(rawDataFromFile2, getFileExtension(path2));
   return compareObjects(objectFromFile1, objectFromFile2);
 };

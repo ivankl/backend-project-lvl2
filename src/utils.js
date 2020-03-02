@@ -9,3 +9,5 @@ export const constructFilePath = (filepath) => {
 };
 
 export const getRawData = (filepath) => fs.readFileSync(filepath);
+
+export const getFileExtension = (filepath) => path.extname(filepath).slice(1);

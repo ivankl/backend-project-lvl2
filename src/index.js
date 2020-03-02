@@ -1,3 +1,3 @@
-import genJSONDiff from './genDiff';
+import genDiff from './genDiff';
 
-export default genJSONDiff;
+export default genDiff;
