@@ -19,14 +19,16 @@ const testObject = {
 const JSONTestFiles = {
   before: makeFullPath('before.json'),
   after: makeFullPath('after.json'),
-  diff: makeFullPath('diffJSON.txt'),
+  expectedDiff: makeFullPath('diffJSON.txt'),
 };
 
 const YMLTestFiles = {
   before: makeFullPath('before.yml'),
   after: makeFullPath('after.yml'),
-  diff: makeFullPath('diffYML.txt'),
+  expectedDiff: makeFullPath('diffYML.txt'),
 };
+
+const generateActualResult = (obj) => genJSONDiff(obj.before, obj.after);
 
 describe('Are different path types read correctly', () => {
   it('Can relative path be recognized', () => {
@@ -42,28 +44,28 @@ describe('Are different path types read correctly', () => {
   });
 });
 
-describe('Are different config files formats parsed correctly', () => {
+describe('Testing JSON files', () => {
   it('is JSON file parsed correctly', () => {
     const parsedObject = parser(fs.readFileSync(JSONTestFiles.before), 'json');
     expect(parsedObject).toMatchObject(testObject);
   });
 
+  it('Is JSON files diff displayed properly #1', () => {
+    const actualResult = generateActualResult(JSONTestFiles);
+    expect(actualResult).toEqual(fs.readFileSync(JSONTestFiles.expectedDiff, 'utf-8'));
+  });
+});
+
+describe('Testing diff between files', () => {
   it('is YML file parsed correctly', () => {
     const parsedObject1 = parser(fs.readFileSync(YMLTestFiles.before), 'yml');
     const parsedObject2 = parser(fs.readFileSync(YMLTestFiles.before), 'yaml');
     expect(parsedObject1).toMatchObject(testObject);
     expect(parsedObject2).toMatchObject(testObject);
   });
-});
-
-describe('Testing diff between files', () => {
-  const generateActualResult = (obj) => genJSONDiff(obj.before, obj.after);
-
-  it('Is JSON files diff displayed properly #1', () => {
-    expect(generateActualResult(JSONTestFiles)).toEqual(fs.readFileSync(JSONTestFiles.diff, 'utf-8'));
-  });
 
   it('Is YML files diff displayed properly', () => {
-    expect(generateActualResult(YMLTestFiles)).toEqual(fs.readFileSync(YMLTestFiles.diff, 'utf-8'));
+    const actualResult = generateActualResult(YMLTestFiles);
+    expect(actualResult).toEqual(fs.readFileSync(YMLTestFiles.expectedDiff, 'utf-8'));
   });
 });
