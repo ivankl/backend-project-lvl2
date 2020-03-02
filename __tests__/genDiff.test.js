@@ -7,6 +7,8 @@ import parser from '../src/parsers';
 
 const fixturesPath = '__fixtures__';
 const makeFullPath = (filename) => `${path.resolve(`${__dirname}`, `..${path.sep}${fixturesPath}`)}${path.sep}${filename}`;
+const pathToExpectedResultFile = makeFullPath('diff.txt');
+
 
 const testObject = {
   name: 'backend-project-lvl2',
@@ -19,13 +21,25 @@ const testObject = {
 const JSONTestFiles = {
   before: makeFullPath('before.json'),
   after: makeFullPath('after.json'),
-  expectedDiff: makeFullPath('diffJSON.txt'),
+  format: 'json',
 };
 
 const YMLTestFiles = {
   before: makeFullPath('before.yml'),
   after: makeFullPath('after.yml'),
-  expectedDiff: makeFullPath('diffYML.txt'),
+  format: 'yml',
+};
+
+const YAMLTestFiles = {
+  before: makeFullPath('before.yaml'),
+  after: makeFullPath('after.yaml'),
+  format: 'yaml',
+};
+
+const iniTestFiles = {
+  before: makeFullPath('before.ini'),
+  after: makeFullPath('after.ini'),
+  format: 'ini',
 };
 
 const generateActualResult = (obj) => genJSONDiff(obj.before, obj.after);
@@ -44,28 +58,16 @@ describe('Are different path types read correctly', () => {
   });
 });
 
-describe('Testing JSON files', () => {
-  it('is JSON file parsed correctly', () => {
-    const parsedObject = parser(fs.readFileSync(JSONTestFiles.before), 'json');
+describe.each([JSONTestFiles, YMLTestFiles, YAMLTestFiles, iniTestFiles])('Testing if different file formats can be parsed', (obj) => {
+  it(`Is ${obj.format} file parsed correctly`, () => {
+    const parsedObject = parser(fs.readFileSync(obj.before, 'utf-8'), obj.format);
     expect(parsedObject).toMatchObject(testObject);
-  });
-
-  it('Is JSON files diff displayed properly #1', () => {
-    const actualResult = generateActualResult(JSONTestFiles);
-    expect(actualResult).toEqual(fs.readFileSync(JSONTestFiles.expectedDiff, 'utf-8'));
   });
 });
 
-describe('Testing diff between files', () => {
-  it('is YML file parsed correctly', () => {
-    const parsedObject1 = parser(fs.readFileSync(YMLTestFiles.before), 'yml');
-    const parsedObject2 = parser(fs.readFileSync(YMLTestFiles.before), 'yaml');
-    expect(parsedObject1).toMatchObject(testObject);
-    expect(parsedObject2).toMatchObject(testObject);
-  });
-
-  it('Is YML files diff displayed properly', () => {
-    const actualResult = generateActualResult(YMLTestFiles);
-    expect(actualResult).toEqual(fs.readFileSync(YMLTestFiles.expectedDiff, 'utf-8'));
+describe.each([JSONTestFiles, YMLTestFiles, YAMLTestFiles, iniTestFiles])('Testing diff between files', (obj) => {
+  it(`Is ${obj.format} files' diff displayed properly`, () => {
+    const actualResult = generateActualResult(obj);
+    expect(actualResult).toEqual(fs.readFileSync(pathToExpectedResultFile, 'utf-8'));
   });
 });

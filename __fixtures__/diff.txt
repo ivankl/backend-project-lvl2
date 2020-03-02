@@ -4,4 +4,4 @@ version: 0.0.1
 - description: Second project for Hexlet
 main: dist/index.js
 - lowLevel: test
-+ test-field: Present in after.yml
++ test-field: Present in after

@@ -29,8 +29,8 @@ const compareObjects = (object1, object2) => {
 };
 
 export default (path1, path2) => {
-  const rawDataFromFile1 = fs.readFileSync(constructFilePath(path1));
-  const rawDataFromFile2 = fs.readFileSync(constructFilePath(path2));
+  const rawDataFromFile1 = fs.readFileSync(constructFilePath(path1), 'utf-8');
+  const rawDataFromFile2 = fs.readFileSync(constructFilePath(path2), 'utf-8');
   const objectFromFile1 = getParsedData(rawDataFromFile1, getFileExtension(path1));
   const objectFromFile2 = getParsedData(rawDataFromFile2, getFileExtension(path2));
   return compareObjects(objectFromFile1, objectFromFile2);
