@@ -16,8 +16,6 @@ const testObject = {
   lowLevel: 'test',
 };
 
-const generateResults = (obj) => genJSONDiff(obj.before, obj.after);
-
 const JSONTestFiles = {
   before: makeFullPath('before.json'),
   after: makeFullPath('after.json'),
