@@ -1,0 +1,7 @@
++ name: backend-project-lvl2+changes
+- name: backend-project-lvl2
+version: 0.0.1
+- description: Second project for Hexlet
+main: dist/index.js
+- low-level: test
++ test-field: Present in after.yml

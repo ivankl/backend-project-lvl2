@@ -46,10 +46,10 @@ describe('Are different config files formats parsed correctly', () => {
 });
 
 describe('Testing diff between JSON files', () => {
-  const fullPathToResult = constructFullPath('diff.txt');
   it('Are files compared properly #1', () => {
     const fullPathToFile1 = constructFullPath('before.json');
     const fullPathToFile2 = constructFullPath('after.json');
+    const fullPathToResult = constructFullPath('diffJSON.txt');
     const expectedResult = fs.readFileSync(fullPathToResult, 'utf-8');
     const compareResult = genJSONDiff(fullPathToFile1, fullPathToFile2);
     expect(compareResult).toEqual(expectedResult);
@@ -58,6 +58,7 @@ describe('Testing diff between JSON files', () => {
   it('Are files compared properly #2', () => {
     const fullPathToFile1 = constructFullPath('before.yml');
     const fullPathToFile2 = constructFullPath('after.yml');
+    const fullPathToResult = constructFullPath('diffYML.txt');
     const expectedResult = fs.readFileSync(fullPathToResult, 'utf-8');
     const compareResult = genJSONDiff(fullPathToFile1, fullPathToFile2);
     expect(compareResult).toEqual(expectedResult);
