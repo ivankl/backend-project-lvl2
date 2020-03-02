@@ -16,16 +16,18 @@ const testObject = {
   lowLevel: 'test',
 };
 
+const generateResults = (obj) => genJSONDiff(obj.before, obj.after);
+
 const JSONTestFiles = {
   before: makeFullPath('before.json'),
   after: makeFullPath('after.json'),
-  result: makeFullPath('diffJSON.txt'),
+  diff: makeFullPath('diffJSON.txt'),
 };
 
 const YMLTestFiles = {
   before: makeFullPath('before.yml'),
   after: makeFullPath('after.yml'),
-  result: makeFullPath('diffYML.txt'),
+  diff: makeFullPath('diffYML.txt'),
 };
 
 describe('Are different path types read correctly', () => {
@@ -57,18 +59,13 @@ describe('Are different config files formats parsed correctly', () => {
 });
 
 describe('Testing diff between files', () => {
-  const generateResults = (obj) => ({
-    actual: genJSONDiff(obj.before, obj.after),
-    expected: fs.readFileSync(obj.result, 'utf-8'),
-  });
+  const generateActualResult = (obj) => genJSONDiff(obj.before, obj.after);
 
   it('Is JSON files diff displayed properly #1', () => {
-    const results = generateResults(JSONTestFiles);
-    expect(results.actual).toEqual(results.expected);
+    expect(generateActualResult(JSONTestFiles)).toEqual(fs.readFileSync(JSONTestFiles.diff));
   });
 
   it('Is YML files diff displayed properly', () => {
-    const results = generateResults(JSONTestFiles);
-    expect(results.actual).toEqual(results.expected);
+    expect(generateActualResult(YMLTestFiles)).toEqual(YMLTestFiles.diff);
   });
 });
