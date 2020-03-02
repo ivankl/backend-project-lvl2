@@ -14,5 +14,5 @@ export default () => {
     .option('-f, --format [type]', 'output format')
     .parse(process.argv);
 
-  genDiff(config1Path, config2Path);
+  console.log(genDiff(config1Path, config2Path));
 };

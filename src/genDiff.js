@@ -1,18 +1,6 @@
-import fs from 'fs';
 import _ from 'lodash';
-import path from 'path';
-
-export const resolveFilePath = (filepath) => {
-  if (path.isAbsolute(filepath)) {
-    return filepath;
-  }
-  return path.resolve(filepath);
-};
-
-export const getParsedData = (filepath) => {
-  const rawData = fs.readFileSync(resolveFilePath(filepath));
-  return JSON.parse(rawData);
-};
+import getParsedJSONdata from './parsers/JSONparser';
+import { constructFilePath, getRawData } from './utils';
 
 const getAllKeyes = (object1, object2) => {
   const keysOfObject1 = Object.keys(object1);
@@ -39,8 +27,10 @@ const compareObjects = (object1, object2) => {
   return result;
 };
 
-export const genJSONDiff = (path1, path2) => {
-  const objectFromFile1 = getParsedData(path1);
-  const objectFromFile2 = getParsedData(path2);
+export default (path1, path2) => {
+  const rawDataFromFile1 = getRawData(constructFilePath(path1));
+  const rawDataFromFile2 = getRawData(constructFilePath(path2));
+  const objectFromFile1 = getParsedJSONdata(rawDataFromFile1);
+  const objectFromFile2 = getParsedJSONdata(rawDataFromFile2);
   return compareObjects(objectFromFile1, objectFromFile2);
 };
