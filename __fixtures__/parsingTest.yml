@@ -1,8 +1,0 @@
-name:
-  backend-project-lvl2
-version:
-  0.0.1
-description:
-  Second project for Hexlet
-main:
-  dist/index.js

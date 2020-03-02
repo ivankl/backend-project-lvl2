@@ -3,5 +3,5 @@
   "version": "0.0.1",
   "description": "Second project for Hexlet",
   "main": "dist/index.js",
-  "low-level": "test"
+  "lowLevel": "test"
 }

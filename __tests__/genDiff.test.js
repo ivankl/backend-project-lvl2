@@ -6,61 +6,69 @@ import parser from '../src/parsers';
 
 
 const fixturesPath = '__fixtures__';
-const object = {
+const makeFullPath = (filename) => `${path.resolve(`${__dirname}`, `..${path.sep}${fixturesPath}`)}${path.sep}${filename}`;
+
+const testObject = {
   name: 'backend-project-lvl2',
   version: '0.0.1',
   description: 'Second project for Hexlet',
   main: 'dist/index.js',
+  lowLevel: 'test',
 };
 
-const constructFullPath = (filename) => `${path.resolve(`${__dirname}`, `../${fixturesPath}`)}/${filename}`;
+const JSONTestFiles = {
+  before: makeFullPath('before.json'),
+  after: makeFullPath('after.json'),
+  result: makeFullPath('diffJSON.txt'),
+};
 
-describe('Testing if different paths types can be read', () => {
+const YMLTestFiles = {
+  before: makeFullPath('before.yml'),
+  after: makeFullPath('after.yml'),
+  result: makeFullPath('diffYML.txt'),
+};
+
+describe('Are different path types read correctly', () => {
   it('Can relative path be recognized', () => {
-    const pathResult = constructFilePath(`${fixturesPath}/before.json`);
-    const expectedPath = constructFullPath('before.json');
-    expect(pathResult).toEqual(expectedPath);
+    const actualPath = constructFilePath(`${fixturesPath}${path.sep}before.json`);
+    const expectedPath = JSONTestFiles.before;
+    expect(actualPath).toEqual(expectedPath);
   });
 
   it('Can absolute path be recognized', () => {
-    const pathResult = constructFilePath(`${path.resolve(`${__dirname}`, '..')}/${fixturesPath}/before.json`);
-    const expectedPath = constructFullPath('before.json');
-    expect(pathResult).toEqual(expectedPath);
+    const actualPath = constructFilePath(`${path.resolve(`${__dirname}`, '..')}${path.sep}${fixturesPath}${path.sep}before.json`);
+    const expectedPath = JSONTestFiles.before;
+    expect(actualPath).toEqual(expectedPath);
   });
 });
 
 describe('Are different config files formats parsed correctly', () => {
   it('is JSON file parsed correctly', () => {
-    const fullPathTestFile = constructFullPath('parsingTest.json');
-    const parsedObject = parser(fs.readFileSync(fullPathTestFile), 'json');
-    expect(parsedObject).toMatchObject(object);
+    const parsedObject = parser(fs.readFileSync(JSONTestFiles.before), 'json');
+    expect(parsedObject).toMatchObject(testObject);
   });
 
   it('is YML file parsed correctly', () => {
-    const fullPathTestFile = constructFullPath('parsingTest.yml');
-    const parsedObject1 = parser(fs.readFileSync(fullPathTestFile), 'yml');
-    const parsedObject2 = parser(fs.readFileSync(fullPathTestFile), 'yaml');
-    expect(parsedObject1).toMatchObject(object);
-    expect(parsedObject2).toMatchObject(object);
+    const parsedObject1 = parser(fs.readFileSync(YMLTestFiles.before), 'yml');
+    const parsedObject2 = parser(fs.readFileSync(YMLTestFiles.before), 'yaml');
+    expect(parsedObject1).toMatchObject(testObject);
+    expect(parsedObject2).toMatchObject(testObject);
   });
 });
 
-describe('Testing diff between JSON files', () => {
-  it('Are files compared properly #1', () => {
-    const fullPathToFile1 = constructFullPath('before.json');
-    const fullPathToFile2 = constructFullPath('after.json');
-    const fullPathToResult = constructFullPath('diffJSON.txt');
-    const expectedResult = fs.readFileSync(fullPathToResult, 'utf-8');
-    const compareResult = genJSONDiff(fullPathToFile1, fullPathToFile2);
-    expect(compareResult).toEqual(expectedResult);
+describe('Testing diff between files', () => {
+  const generateExpectedResult = (obj) => fs.readFileSync(obj.result, 'utf-8');
+  const generateActualResult = (obj) => genJSONDiff(obj.before, obj.after);
+
+  it('Is JSON files diff displayed properly #1', () => {
+    const expectedResult = generateExpectedResult(JSONTestFiles);
+    const actualResult = generateActualResult(JSONTestFiles);
+    expect(actualResult).toEqual(expectedResult);
   });
 
-  it('Are files compared properly #2', () => {
-    const fullPathToFile1 = constructFullPath('before.yml');
-    const fullPathToFile2 = constructFullPath('after.yml');
-    const fullPathToResult = constructFullPath('diffYML.txt');
-    const expectedResult = fs.readFileSync(fullPathToResult, 'utf-8');
-    const compareResult = genJSONDiff(fullPathToFile1, fullPathToFile2);
-    expect(compareResult).toEqual(expectedResult);
+  it('Is YML files diff displayed properly', () => {
+    const expectedResult = generateExpectedResult(YMLTestFiles);
+    const actualResult = generateActualResult(YMLTestFiles);
+    expect(actualResult).toEqual(expectedResult);
   });
 });

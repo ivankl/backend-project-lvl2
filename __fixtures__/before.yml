@@ -6,5 +6,5 @@ description:
   Second project for Hexlet
 main:
   dist/index.js
-low-level:
+lowLevel:
   test
