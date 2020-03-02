@@ -62,10 +62,10 @@ describe('Testing diff between files', () => {
   const generateActualResult = (obj) => genJSONDiff(obj.before, obj.after);
 
   it('Is JSON files diff displayed properly #1', () => {
-    expect(generateActualResult(JSONTestFiles)).toEqual(fs.readFileSync(JSONTestFiles.diff));
+    expect(generateActualResult(JSONTestFiles)).toEqual(fs.readFileSync(JSONTestFiles.diff, 'utf-8'));
   });
 
   it('Is YML files diff displayed properly', () => {
-    expect(generateActualResult(YMLTestFiles)).toEqual(YMLTestFiles.diff);
+    expect(generateActualResult(YMLTestFiles)).toEqual(fs.readFileSync(YMLTestFiles.diff, 'utf-8'));
   });
 });
