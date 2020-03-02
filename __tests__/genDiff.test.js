@@ -57,18 +57,18 @@ describe('Are different config files formats parsed correctly', () => {
 });
 
 describe('Testing diff between files', () => {
-  const generateExpectedResult = (obj) => fs.readFileSync(obj.result, 'utf-8');
-  const generateActualResult = (obj) => genJSONDiff(obj.before, obj.after);
+  const generateResults = (obj) => ({
+    actual: genJSONDiff(obj.before, obj.after),
+    expected: fs.readFileSync(obj.result, 'utf-8'),
+  });
 
   it('Is JSON files diff displayed properly #1', () => {
-    const expectedResult = generateExpectedResult(JSONTestFiles);
-    const actualResult = generateActualResult(JSONTestFiles);
-    expect(actualResult).toEqual(expectedResult);
+    const results = generateResults(JSONTestFiles);
+    expect(results.actual).toEqual(results.expected);
   });
 
   it('Is YML files diff displayed properly', () => {
-    const expectedResult = generateExpectedResult(YMLTestFiles);
-    const actualResult = generateActualResult(YMLTestFiles);
-    expect(actualResult).toEqual(expectedResult);
+    const results = generateResults(JSONTestFiles);
+    expect(results.actual).toEqual(results.expected);
   });
 });
