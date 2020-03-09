@@ -1,6 +1,11 @@
 {
-  "name": "backend-project-lvl2+changes",
-  "version": "0.0.1",
-  "main": "dist/index.js",
-  "test-field": "Present in after"
+  "common": {
+     "name": "backend-project-lvl2+changes",
+     "version": "0.0.1",
+     "main": "dist/index.js",
+     "arrayTest": ["Test1", "Test3", "Test2"],
+     "arrayLength": ["Test1"],
+     "test-field": "Present in after"
+  },
+ "lecture": "0000"
 }

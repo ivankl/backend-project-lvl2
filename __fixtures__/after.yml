@@ -1,11 +1,19 @@
-name:
-  backend-project-lvl2+changes
-
-version:
-  0.0.1
-
-main:
-  dist/index.js
-
-test-field:
-  Present in after
+common:
+  name:
+    backend-project-lvl2
+  version:
+    0.0.1
+  description:
+    Second project for Hexlet
+  main:
+    dist/index.js
+  lowLevel:
+    test
+  arrayTest:
+   - Test1
+   - Test2
+   - Test3
+   arrayLength:
+   - Test1
+lecture:
+  1234

@@ -1,7 +1,15 @@
-+ name: backend-project-lvl2+changes
-- name: backend-project-lvl2
-version: 0.0.1
-- description: Second project for Hexlet
-main: dist/index.js
-- lowLevel: test
-+ test-field: Present in after
+common: {
+    + name: backend-project-lvl2+changes
+    - name: backend-project-lvl2
+    version: 0.0.1
+    - description: Second project for Hexlet
+    main: dist/index.js
+    - lowLevel: test
+    + arrayTest: [Test1, Test3, Test2]
+    - arrayTest: [Test1, Test2, [Test3]]
+    + arrayLength: [Test1]
+    - arrayLength: [Test1, Test2]
+    + test-field: Present in after
+  }
++ lecture = 0000
+- lecture = 1234
