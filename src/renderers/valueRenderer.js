@@ -1,11 +1,12 @@
+import _ from 'lodash';
 import arrayToString from './arrayRenderer';
 import objectToString from './objectRenderer';
 
 export default (value, depth) => {
-  if (value instanceof Array && value instanceof Object) {
+  if (_.isArray(value)) {
     return `${arrayToString(value)}\n`;
   }
-  if (!(value instanceof Array) && value instanceof Object) {
+  if (!(_.isArray(value)) && _.isObject(value)) {
     return objectToString(value, depth);
   }
   return `${value}\n`;

@@ -1,13 +1,11 @@
 import _ from 'lodash';
-import { areValuesEqual, areBothItemsArrays, areBothItemsObjects } from './utils';
+import { areValuesEqual, areBothItemsNested } from './utils';
 
 const getAllKeyes = (object1, object2) => _.union(Object.keys(object1), Object.keys(object2));
 
 const buildNode = (object1, object2, key, fn) => {
-  if (!(areBothItemsArrays(object1[key], object2[key]))) {
-    if (areBothItemsObjects(object1[key], object2[key])) {
-      return { key, type: 'nested', value: fn(object1[key], object2[key]) };
-    }
+  if (areBothItemsNested(object1[key], object2[key])) {
+    return { key, type: 'nested', value: fn(object1[key], object2[key]) };
   }
   if (areValuesEqual(object1[key], object2[key])) {
     return { key, type: 'unchanged', value: object1[key] };
