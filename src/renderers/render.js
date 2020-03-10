@@ -1,21 +1,22 @@
 import valueRender from './valueRenderer';
 import { addSpaces } from '../utils';
 
-const typeDispatch = {
-  unchanged: (item, depth) => `  ${item.key}: ${valueRender(item.value, depth)}\n`,
-  removed: (item, depth) => `- ${item.key}: ${valueRender(item.value, depth)}\n`,
-  added: (item, depth) => `+ ${item.key}: ${valueRender(item.value, depth)}\n`,
-  modified: (item, depth) => `+ ${item.key}: ${valueRender(item.newValue, depth)}\n${addSpaces(depth)}- ${item.key}: ${valueRender(item.oldValue, depth)}\n`,
+const renderTypeDispatch = {
+  unchanged: (item) => `  ${item.key}: ${valueRender(item.value, item.depth)}`,
+  removed: (item) => `- ${item.key}: ${valueRender(item.value, item.depth)}`,
+  added: (item) => `+ ${item.key}: ${valueRender(item.value, item.depth)}`,
+  modified: (item) => `+ ${item.key}: ${valueRender(item.newValue, item.depth)}${addSpaces(item.depth)}- ${item.key}: ${valueRender(item.oldValue, item.depth)}`,
 };
 
-export const render = (ast, depth = 0) => {
+export const render = (ast) => {
+  const adjustDepthForBrackets = ast[0].depth - 0.5;
   const result = ast.reduce((acc, item) => {
-    if (item.type === 'children') {
-      return `${acc}${addSpaces(depth)}${item.key}: ${render(item.value, depth + 2)}`;
+    if (item.type === 'nested') {
+      return `${acc}${addSpaces(item.depth)}  ${item.key}: ${render(item.value)}`;
     }
-    return `${acc}${addSpaces(depth)}${typeDispatch[item.type](item, depth)}`;
+    return `${acc}${addSpaces(item.depth)}${renderTypeDispatch[item.type](item)}`;
   }, '{\n');
-  return `${result}}\n`;
+  return `${result}${addSpaces(adjustDepthForBrackets)}}\n`;
 };
 
 export default render;

@@ -36,4 +36,4 @@ export const areValuesEqual = (item1, item2) => {
   return (item1 === item2);
 };
 
-export const addSpaces = (number) => ' '.repeat(number + 2);
+export const addSpaces = (number) => ' '.repeat(number * 4 - 2);

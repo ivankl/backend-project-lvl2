@@ -1,10 +1,9 @@
 import _ from 'lodash';
 
 const arrayToString = (array) => {
-  console.log(array);
   const arrayElementsToString = array.reduce((acc, element) => {
     if (_.isArray(element)) {
-      return arrayToString(element);
+      return `${acc}, ${arrayToString(element)}`;
     }
     return `${acc}, ${element}`;
   }, '');
