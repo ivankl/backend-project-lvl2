@@ -8,7 +8,8 @@ const generatePaths = (extensions, fixturesPath) => (extensions.reduce((acc, ext
   {
     before: getFixturePath(`before.${extension}`, fixturesPath),
     after: getFixturePath(`after.${extension}`, fixturesPath),
-    expected: getFixturePath('diff.txt', fixturesPath),
+    expectedNested: getFixturePath('diffNested.txt', fixturesPath),
+    expectedPlain: getFixturePath('diffPlain.txt', fixturesPath),
     format: extension,
   }], []));
 
@@ -16,6 +17,7 @@ const flatFixturesFolder = 'flat';
 const nestedFixturesFolder = 'nested';
 const nestedFiles = ['json', 'yml'];
 const flatFiles = ['ini'];
+
 
 const testFiles = generatePaths(flatFiles, flatFixturesFolder)
   .concat(generatePaths(nestedFiles, nestedFixturesFolder));
@@ -31,10 +33,18 @@ describe('Are different path types parsed correctly', () => {
   });
 });
 
-describe.each(testFiles)('Testing diff between files', (obj) => {
+describe.each(testFiles)('Testing nested format diff between files', (obj) => {
   it(`Is ${obj.format} files' diff displayed properly`, () => {
-    const actualResult = genDiff(obj.before, obj.after);
-    const expectedResult = fs.readFileSync(obj.expected, 'utf-8');
+    const actualResult = genDiff(obj.before, obj.after, 'nested');
+    const expectedResult = fs.readFileSync(obj.expectedNested, 'utf-8');
+    expect(actualResult).toBe(expectedResult);
+  });
+});
+
+describe.each(testFiles)('Testing plain format diff between files', (obj) => {
+  it(`Is ${obj.format} files' diff displayed properly`, () => {
+    const actualResult = genDiff(obj.before, obj.after, 'plain');
+    const expectedResult = fs.readFileSync(obj.expectedPlain, 'utf-8');
     expect(actualResult).toBe(expectedResult);
   });
 });

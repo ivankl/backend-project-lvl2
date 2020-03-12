@@ -33,6 +33,8 @@
     }
   + group4: [ test1, test2, [ test3, test4]]
   - group4: [ test1, test2, [ test3]]
+  + group6: 123456
+  - group6: 1111
   + group3: {
         fee: {
             heluhelu: 100500

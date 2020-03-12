@@ -19,5 +19,6 @@
   "group2": {
     "abc": 12345
   },
-  "group4": ["test1", "test2", ["test3"]]
+  "group4": ["test1", "test2", ["test3"]],
+  "group6": 1111
 }
