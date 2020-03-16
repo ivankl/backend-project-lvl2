@@ -4,6 +4,31 @@ This is a package, which allows to compare two configuration files and prints th
 [![Maintainability](https://api.codeclimate.com/v1/badges/cb6f35a9023d0307cc51/maintainability)](https://codeclimate.com/github/ivankl/backend-project-lvl2/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/cb6f35a9023d0307cc51/test_coverage)](https://codeclimate.com/github/ivankl/backend-project-lvl2/test_coverage)
 
+Installation:
+npm install gendiff-backend-project-lvl2
+
+Usage:
+
+Usage: gendiff [options] <firstConfig> <secondConfig>
+
+Compares two configuration files and shows a difference.
+
+Options:
+  -V, --version        output the version number
+  -f, --format [type]  output format (default: "nested")
+  -h, --help           output usage information
+
+Plain json file diff:
+
+[![asciicast](https://asciinema.org/a/E52PshDfwps641C0Aww5vcH5J.svg)](https://asciinema.org/a/E52PshDfwps641C0Aww5vcH5J)
+
+Plain yml file diff:
+
+[![asciicast](https://asciinema.org/a/60THuVdLvUHgtzid4nHPGtdpU.svg)](https://asciinema.org/a/60THuVdLvUHgtzid4nHPGtdpU)
+
+Plain ini file diff:
+
+[![asciicast](https://asciinema.org/a/wDLFCaavEUKgE3RdY6BNgFNxh.svg)](https://asciinema.org/a/wDLFCaavEUKgE3RdY6BNgFNxh)
 
 Example of to choose nested output format:
 
