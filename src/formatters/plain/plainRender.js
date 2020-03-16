@@ -14,14 +14,14 @@ const generateFullPathToProperty = (parentPath, newElement) => {
   return `${parentPath}${newElement}`;
 };
 
-export const plainRender = (ast, parent = '') => {
+export const renderPlain = (ast, parent = '') => {
   const result = ast.reduce((acc, item) => {
     if (item.type === 'nested') {
-      return `${acc}${plainRender(item.value, `${generateFullPathToProperty(parent, item.key)}`)}`;
+      return `${acc}${renderPlain(item.children, `${generateFullPathToProperty(parent, item.key)}`)}`;
     }
     return `${acc}${renderTypeDispatch[item.type](item, `${generateFullPathToProperty(parent, item.key)}`)}`;
   }, '');
   return `${result}`;
 };
 
-export default plainRender;
+export default renderPlain;

@@ -5,15 +5,15 @@ const getAllKeyes = (object1, object2) => _.union(Object.keys(object1), Object.k
 
 const buildNode = (object1, object2, key, fn) => {
   if (areBothItemsNested(object1[key], object2[key])) {
-    return { key, type: 'nested', value: fn(object1[key], object2[key]) };
+    return { key, type: 'nested', children: fn(object1[key], object2[key]) };
   }
   if (areValuesEqual(object1[key], object2[key])) {
     return { key, type: 'unchanged', value: object1[key] };
   }
-  if (!(_.has(object1, key)) && _.has(object2, key)) {
+  if (!(_.has(object1, key))) {
     return { key, type: 'added', value: object2[key] };
   }
-  if (!(_.has(object2, key)) && _.has(object1, key)) {
+  if (!(_.has(object2, key))) {
     return { key, type: 'removed', value: object1[key] };
   }
   return {

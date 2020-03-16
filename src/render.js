@@ -1,11 +1,11 @@
-import { nestedRender } from './formatters/nested/nestedRender';
-import { plainRender } from './formatters/plain/plainRender';
+import { renderNested } from './formatters/nested/nestedRender';
+import { renderPlain } from './formatters/plain/plainRender';
+import renderJSON from './formatters/json/jsonRenderer';
 
 const outputFormatDispatch = {
-  nested: (ast) => nestedRender(ast),
-  plain: (ast) => plainRender(ast),
+  nested: (ast) => renderNested(ast),
+  plain: (ast) => renderPlain(ast),
+  json: (ast) => renderJSON(ast),
 };
 
-export const render = (ast, format) => outputFormatDispatch[format](ast);
-
-export default render;
+export default (ast, format) => outputFormatDispatch[format](ast);

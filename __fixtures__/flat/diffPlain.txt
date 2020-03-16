@@ -1,5 +1,0 @@
-Property 'name' was changed from 'backend-project-lvl2' to 'backend-project-lvl2+changes'
-Property 'description' was deleted
-Property 'lowLevel' was deleted
-Property 'arrayTest' was changed from [complex value] to [complex value]
-Property 'test-field' was added with value: 'Present in after'

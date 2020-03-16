@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-import gendiff from '../app';
+import app from '../app';
 
-gendiff();
+app();
