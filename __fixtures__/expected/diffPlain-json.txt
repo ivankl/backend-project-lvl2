@@ -1,3 +1,5 @@
+Property 'group4' was changed from [complex value] to [complex value]
+Property 'group6' was changed from 1111 to 123456
 Property 'common.follow' was changed from [complex value] to [complex value]
 Property 'common.setting2' was deleted
 Property 'common.setting3' was changed from true to [complex value]
@@ -8,6 +10,4 @@ Property 'group1.baz' was changed from 'bas' to 'bars'
 Property 'group1.zepp' was changed from [complex value] to [complex value]
 Property 'group1.nest' was changed from [complex value] to 'str'
 Property 'group2' was deleted
-Property 'group4' was changed from [complex value] to [complex value]
-Property 'group6' was changed from 1111 to 123456
 Property 'group3' was added with value: [complex value]

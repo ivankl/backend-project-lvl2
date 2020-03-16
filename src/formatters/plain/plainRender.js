@@ -1,10 +1,10 @@
-import valueRender from './valueRenderer';
+import renderValue from './valueRenderer';
 
 const renderTypeDispatch = {
   unchanged: () => '',
   removed: (item, fullPath) => `Property '${fullPath}' was deleted\n`,
-  added: (item, fullPath) => `Property '${fullPath}' was added with value: ${valueRender(item.value)}\n`,
-  modified: (item, fullPath) => `Property '${fullPath}' was changed from ${valueRender(item.oldValue)} to ${valueRender(item.newValue)}\n`,
+  added: (item, fullPath) => `Property '${fullPath}' was added with value: ${renderValue(item.value)}\n`,
+  modified: (item, fullPath) => `Property '${fullPath}' was changed from ${renderValue(item.oldValue)} to ${renderValue(item.newValue)}\n`,
 };
 
 const generateFullPathToProperty = (parentPath, newElement) => {

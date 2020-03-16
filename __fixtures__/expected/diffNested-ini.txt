@@ -1,4 +1,8 @@
 {
+  + group4: [ test1, test2, [ test3, test4]]
+  - group4: [ test1, test2, [ test3]]
+  + group6: 123456
+  - group6: 1111
     common: {
       + follow: [ test1, test3, test2]
       - follow: [ test1, test2]
@@ -31,10 +35,6 @@
   - group2: {
         abc: 12345
     }
-  + group4: [ test1, test2, [ test3, test4]]
-  - group4: [ test1, test2, [ test3]]
-  + group6: 123456
-  - group6: 1111
   + group3: {
         fee: {
             heluhelu: 100500

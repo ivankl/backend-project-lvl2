@@ -1,3 +1,10 @@
+group4:
+  - test1
+  - test2
+  -
+    - test3
+    - test4
+group6: 123456
 common:
   follow:
     - test1
@@ -33,10 +40,3 @@ group3:
   fee:
     heluhelu:
       100500
-group4:
-  - test1
-  - test2
-  -
-    - test3
-    - test4
-group6: 123456

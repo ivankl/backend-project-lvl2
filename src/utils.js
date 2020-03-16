@@ -1,5 +1,6 @@
 import path from 'path';
 import _ from 'lodash';
+import fs from 'fs';
 
 export const constructFilePath = (filepath) => {
   if (path.isAbsolute(filepath)) {
@@ -7,6 +8,8 @@ export const constructFilePath = (filepath) => {
   }
   return path.resolve(filepath);
 };
+
+export const readFile = (filepath) => fs.readFileSync(constructFilePath(filepath), 'utf-8');
 
 export const getFileExtension = (filepath) => path.extname(filepath).slice(1);
 
