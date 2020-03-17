@@ -30,8 +30,8 @@ Plain yml file diff example: [asciinema](https://asciinema.org/a/60THuVdLvUHgtzi
 
 Plain ini file diff example: [asciinema](https://asciinema.org/a/wDLFCaavEUKgE3RdY6BNgFNxh)
 
-Example of to choose nested output format: [asciinema](https://asciinema.org/a/0nkZLn9LUHcNitDVYLjTRbtrS)
+Example of how to choose nested output format: [asciinema](https://asciinema.org/a/0nkZLn9LUHcNitDVYLjTRbtrS)
 
-Example of to choose plain output format: [asciinema](https://asciinema.org/a/7YNFb7mz0P0DLsFtGv5hXh1ea)
+Example of how to choose plain output format: [asciinema](https://asciinema.org/a/7YNFb7mz0P0DLsFtGv5hXh1ea)
 
-Example of to choose JSON output format: [asciinema](https://asciinema.org/a/JHUXXRLqRZnKtKibSHQUcofCB)
+Example of how to choose JSON output format: [asciinema](https://asciinema.org/a/JHUXXRLqRZnKtKibSHQUcofCB)
