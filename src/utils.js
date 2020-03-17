@@ -23,4 +23,8 @@ export const areBothItemsNested = (item1, item2) => !(areBothItemsArrays(item1, 
 
 export const areValuesEqual = (item1, item2) => _.isEqual(item1, item2);
 
-export const addSpaces = (number) => ' '.repeat(number * 4 - 2);
+export const addTabulation = (depth) => {
+  const tabulation = 4;
+  const adjustmentForChangedItems = 2;
+  return ' '.repeat(depth * tabulation - adjustmentForChangedItems);
+};
