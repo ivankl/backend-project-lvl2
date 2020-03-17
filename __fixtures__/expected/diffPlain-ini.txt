@@ -1,5 +1,5 @@
 Property 'group4' was changed from [complex value] to [complex value]
-Property 'group6' was changed from '1111' to '123456'
+Property 'group6' was changed from '1' to '11'
 Property 'common.follow' was changed from [complex value] to [complex value]
 Property 'common.setting2' was deleted
 Property 'common.setting3' was changed from true to [complex value]

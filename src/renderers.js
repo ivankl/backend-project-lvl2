@@ -3,9 +3,9 @@ import { renderPlain } from './formatters/plain/plainRender';
 import renderJSON from './formatters/json/jsonRenderer';
 
 const outputFormatDispatch = {
-  nested: (ast) => renderNested(ast),
-  plain: (ast) => renderPlain(ast),
-  json: (ast) => renderJSON(ast),
+  nested: renderNested,
+  plain: renderPlain,
+  json: renderJSON,
 };
 
 export default (ast, format) => outputFormatDispatch[format](ast);
