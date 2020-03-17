@@ -36,7 +36,7 @@ describe.each(pathsToTestFiles)('Testing plain format diff between files', (obj)
 describe.each(pathsToTestFiles)('Testing json format diff between files', (obj) => {
   it(`Is ${obj.format} files' diff displayed properly`, () => {
     const actualResult = genDiff(obj.config1, obj.config2, 'json');
-    const expectedResult = readFile(obj.expectedJSON).trim();
+    const expectedResult = readFile(obj.expectedJSON);
     expect(actualResult).toBe(expectedResult);
   });
 });
