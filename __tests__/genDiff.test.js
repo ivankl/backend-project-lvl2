@@ -8,35 +8,20 @@ const getPathsToTestFiles = (extensions) => (extensions
     {
       config1: `__fixtures__${path.sep}before.${extension}`,
       config2: getFixturePath(`after.${extension}`),
-      expectedNested: getFixturePath(`expected/diffNested-${extension}.txt`),
-      expectedPlain: getFixturePath(`expected/diffPlain-${extension}.txt`),
-      expectedJSON: getFixturePath(`expected/diffJSON-${extension}.txt`),
-      format: extension,
+      nested: getFixturePath(`expected/diffNested-${extension}.txt`),
+      plain: getFixturePath(`expected/diffPlain-${extension}.txt`),
+      json: getFixturePath(`expected/diffJSON-${extension}.txt`),
+      extension,
     }], []));
 
 const fileExtensions = ['json', 'yml', 'ini'];
+const outputFormats = ['nested', 'plain', 'json'];
 const pathsToTestFiles = getPathsToTestFiles(fileExtensions);
 
-describe.each(pathsToTestFiles)('Testing nested format diff between files', (obj) => {
-  it(`Is ${obj.format} files' diff displayed properly`, () => {
-    const actualResult = genDiff(obj.config1, obj.config2, 'nested');
-    const expectedResult = readFile(obj.expectedNested);
-    expect(actualResult).toBe(expectedResult);
-  });
-});
-
-describe.each(pathsToTestFiles)('Testing plain format diff between files', (obj) => {
-  it(`Is ${obj.format} files' diff displayed properly`, () => {
-    const actualResult = genDiff(obj.config1, obj.config2, 'plain');
-    const expectedResult = readFile(obj.expectedPlain);
-    expect(actualResult).toBe(expectedResult);
-  });
-});
-
-describe.each(pathsToTestFiles)('Testing json format diff between files', (obj) => {
-  it(`Is ${obj.format} files' diff displayed properly`, () => {
-    const actualResult = genDiff(obj.config1, obj.config2, 'json');
-    const expectedResult = readFile(obj.expectedJSON);
+describe.each(pathsToTestFiles)('Testing nested, plain and json formatted diff between files', (obj) => {
+  it.each(outputFormats)(`Is ${obj.extension} files diff displayed properly`, (format) => {
+    const actualResult = genDiff(obj.config1, obj.config2, format);
+    const expectedResult = readFile(obj[format]);
     expect(actualResult).toBe(expectedResult);
   });
 });
