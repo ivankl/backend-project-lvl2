@@ -10,11 +10,11 @@ const renderTypeDispatch = {
 
 export const renderNested = (ast, depth = 1) => {
   const adjustedDepthForBrackets = depth - 0.5;
-  const result = ast.reduce((acc, item) => {
-    if (item.type === 'nested') {
-      return `${acc}${addTabulation(depth)}  ${item.key}: ${renderNested(item.children, depth + 1)}`;
+  const result = ast.reduce((acc, node) => {
+    if (node.type === 'nested') {
+      return `${acc}${addTabulation(depth)}  ${node.key}: ${renderNested(node.children, depth + 1)}`;
     }
-    return `${acc}${addTabulation(depth)}${renderTypeDispatch[item.type](item, depth)}`;
+    return `${acc}${addTabulation(depth)}${renderTypeDispatch[node.type](node, depth)}`;
   }, '{\n');
   return `${result}${addTabulation(adjustedDepthForBrackets)}}\n`;
 };
