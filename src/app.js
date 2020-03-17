@@ -4,7 +4,7 @@ import genDiff from '.';
 
 const outputFormats = ['nested', 'plain', 'json'];
 
-const formatValidation = (type) => {
+const validateFormat = (type) => {
   if (outputFormats.includes(type)) {
     return type;
   }
@@ -16,7 +16,7 @@ export default () => {
   programm.version(version)
     .description('Compares two configuration files and shows a difference.')
     .arguments('<firstConfig> <secondConfig>')
-    .option('-f, --format [type]', 'output format', formatValidation, 'nested')
+    .option('-f, --format [type]', 'output format', validateFormat, 'nested')
     .action((config1, config2) => console.log(genDiff(config1, config2, programm.format)))
     .parse(process.argv);
 };

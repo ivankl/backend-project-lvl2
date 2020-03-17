@@ -9,14 +9,14 @@ const renderTypeDispatch = {
 };
 
 export const renderNested = (ast, depth = 1) => {
-  const adjustDepthForBrackets = depth - 0.5;
+  const adjustedDepthForBrackets = depth - 0.5;
   const result = ast.reduce((acc, item) => {
     if (item.type === 'nested') {
       return `${acc}${addSpaces(depth)}  ${item.key}: ${renderNested(item.children, depth + 1)}`;
     }
     return `${acc}${addSpaces(depth)}${renderTypeDispatch[item.type](item, depth)}`;
   }, '{\n');
-  return `${result}${addSpaces(adjustDepthForBrackets)}}\n`;
+  return `${result}${addSpaces(adjustedDepthForBrackets)}}\n`;
 };
 
 export default renderNested;
