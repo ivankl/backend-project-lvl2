@@ -1,11 +1,11 @@
-import valueRender from './valueRenderer';
+import renderValue from './valueRenderer';
 import { addSpaces } from '../../utils';
 
 const renderTypeDispatch = {
-  unchanged: (item, depth) => `  ${item.key}: ${valueRender(item.value, depth)}`,
-  removed: (item, depth) => `- ${item.key}: ${valueRender(item.value, depth)}`,
-  added: (item, depth) => `+ ${item.key}: ${valueRender(item.value, depth)}`,
-  modified: (item, depth) => `+ ${item.key}: ${valueRender(item.newValue, depth)}${addSpaces(depth)}- ${item.key}: ${valueRender(item.oldValue, depth)}`,
+  unchanged: (item, depth) => `  ${item.key}: ${renderValue(item.value, depth)}`,
+  removed: (item, depth) => `- ${item.key}: ${renderValue(item.value, depth)}`,
+  added: (item, depth) => `+ ${item.key}: ${renderValue(item.value, depth)}`,
+  modified: (item, depth) => `+ ${item.key}: ${renderValue(item.newValue, depth)}${addSpaces(depth)}- ${item.key}: ${renderValue(item.oldValue, depth)}`,
 };
 
 export const renderNested = (ast, depth = 1) => {
