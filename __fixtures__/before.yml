@@ -1,10 +1,9 @@
 group4:
   - test1
   - test2
-  -
-    - test3
+  - test3
 group6:
-  1111
+  "1"
 common:
   follow:
     - test1
@@ -12,7 +11,7 @@ common:
   setting1:
     Value 1
   setting2:
-    200
+    "200"
   setting3:
     true
   setting6:
@@ -26,10 +25,9 @@ group1:
   zepp:
     - foo
     - bar
-    -
-      - foobar
+    - foobar
   nest:
       key: value
 group2:
   abc:
-    12345
+    "12345"

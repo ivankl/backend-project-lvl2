@@ -1,8 +1,6 @@
 import _ from 'lodash';
 import { areValuesEqual, areBothItemsNested } from './utils';
 
-const getAllKeyes = (object1, object2) => _.union(Object.keys(object1), Object.keys(object2));
-
 const buildNode = (object1, object2, key, fn) => {
   if (areBothItemsNested(object1[key], object2[key])) {
     return { key, type: 'nested', children: fn(object1[key], object2[key]) };
@@ -25,9 +23,8 @@ const buildNode = (object1, object2, key, fn) => {
 };
 
 export const buildAST = (object1, object2) => {
-  const allUsedKeys = getAllKeyes(object1, object2);
-  return allUsedKeys.reduce((acc, key) => [...acc, buildNode(object1, object2, key, buildAST)],
-    []);
+  const allUsedKeys = _.union(Object.keys(object1), Object.keys(object2));
+  return allUsedKeys.map((key) => buildNode(object1, object2, key, buildAST));
 };
 
 export default buildAST;

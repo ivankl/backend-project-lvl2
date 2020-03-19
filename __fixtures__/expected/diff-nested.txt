@@ -1,8 +1,8 @@
 {
-  + group4: [ test1, test2, [ test3, test4]]
-  - group4: [ test1, test2, [ test3]]
+  + group4: [ test1, test2, test3, test4]
+  - group4: [ test1, test2, test3]
   + group6: 11
-  - group6: 1111
+  - group6: 1
     common: {
       + follow: [ test1, test3, test2]
       - follow: [ test1, test2]
@@ -25,8 +25,8 @@
       + baz: bars
       - baz: bas
         foo: bar
-      + zepp: [ foo, bar, foobar]
-      - zepp: [ foo, bar, [ foobar]]
+      + zepp: [ foo, foobar, bar]
+      - zepp: [ foo, bar, foobar]
       + nest: str
       - nest: {
             key: value

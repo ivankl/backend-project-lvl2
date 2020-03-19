@@ -1,20 +1,20 @@
 # Makefile
 
 install:
-		npm ci
+	npm ci
 
 publish:
-		npm publish --dry-run
+	npm publish --dry-run
 
 build:
-		rm -rf
-		npm run build
+	rm -rf
+	npm run build
 
 lint:
-		npx eslint src/.
+	npx eslint .
 
 gendiff:
-		npx babel-node src/bin/gendiff.js
+	npx babel-node src/bin/gendiff.js
 
 test-coverage:
-		npx jest --collect-coverage
+	npx jest --collect-coverage

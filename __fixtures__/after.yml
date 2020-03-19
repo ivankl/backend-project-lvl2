@@ -1,11 +1,10 @@
 group4:
   - test1
   - test2
-  -
-    - test3
-    - test4
+  - test3
+  - test4
 group6:
-  11
+  "11"
 common:
   follow:
     - test1
@@ -33,11 +32,11 @@ group1:
     bars
   zepp:
     - foo
-    - bar
     - foobar
+    - bar
   nest:
     str
 group3:
   fee:
     heluhelu:
-      100
+      "100"
