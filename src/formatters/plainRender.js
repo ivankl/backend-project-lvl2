@@ -1,4 +1,14 @@
-import renderValue from './valueRenderer';
+import _ from 'lodash';
+
+const renderValue = (value) => {
+  if (_.isObject(value)) {
+    return '[complex value]';
+  }
+  if (typeof value === 'string') {
+    return `'${value}'`;
+  }
+  return value;
+};
 
 const renderTypeDispatch = {
   unchanged: () => '',

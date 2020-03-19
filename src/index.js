@@ -1,7 +1,15 @@
+import fs from 'fs';
+import path from 'path';
 import getParsedData from './parsers';
-import { readFile, getFileExtension } from './utils';
 import { buildAST } from './buildAST';
-import render from './renderers';
+import render from './formatters';
+
+const readFile = (filepath) => {
+  const pathToFile = path.resolve(filepath);
+  return fs.readFileSync(pathToFile, 'utf-8');
+};
+
+export const getFileExtension = (filepath) => path.extname(filepath).slice(1);
 
 export default (path1, path2, format) => {
   const rawDataFromFile1 = readFile(path1);
