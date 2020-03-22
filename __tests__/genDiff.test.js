@@ -12,7 +12,7 @@ describe.each(fileExtensions)('Testing nested, plain and json formatted diff bet
     const config1 = `__fixtures__${path.sep}before.${extension}`;
     const config2 = getFixturePath(`after.${extension}`);
 
-    const pathToExpectedResult = getFixturePath(`expected/diff-${format}.txt`);
+    const pathToExpectedResult = getFixturePath(`expected${path.sep}diff-${format}.txt`);
 
     const actualResult = genDiff(config1, config2, format);
     const expectedResult = fs.readFileSync(pathToExpectedResult, 'utf-8');
