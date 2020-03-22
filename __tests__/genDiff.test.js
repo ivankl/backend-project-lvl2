@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import genDiff from '../src';
 
-const getFixturePath = (pathToFile) => path.join(__dirname, '..', `__fixtures__${path.sep}`, pathToFile);
+const getFixturePath = (pathToFile) => path.join(__dirname, '..', '__fixtures__', pathToFile);
 
 const fileExtensions = ['json', 'yml', 'ini'];
 const outputFormats = ['nested', 'plain', 'json'];
