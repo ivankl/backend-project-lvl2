@@ -17,7 +17,7 @@ const generateFullPathToProperty = (parentPath, newElement) => {
   return `${parentPath}${newElement}`;
 };
 
-export const renderPlain = (ast, parent = '') => {
+const renderPlain = (ast, parent = '') => {
   const renderTypeDispatch = {
     nested: (item, fullPath) => renderPlain(item.children, fullPath),
     unchanged: () => null,
