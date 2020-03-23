@@ -1,9 +1,8 @@
 import _ from 'lodash';
 
 const addTabulation = (depth) => {
-  const tabulation = 4;
-  const adjustmentForChangedItems = 2;
-  return ' '.repeat(depth * tabulation - adjustmentForChangedItems);
+  const tabulationStep = 2;
+  return ' '.repeat(depth * tabulationStep);
 };
 
 
@@ -11,12 +10,12 @@ const сonvertObjectToString = (object, depth) => {
   const keys = Object.keys(object);
   const eachValueToString = keys.map((key) => {
     if (_.isObject(object[key]) && !_.isArray(object[key])) {
-      return `${addTabulation(depth + 1)}  ${key}: ${сonvertObjectToString(object[key], depth + 1)}`;
+      return `${addTabulation(depth + 1)}  ${key}: ${сonvertObjectToString(object[key], depth + 2)}`;
     }
     return `${addTabulation(depth + 1)}  ${key}: ${object[key]}`;
   });
   const convertedToString = eachValueToString.join('\n');
-  return `{\n${convertedToString}\n${addTabulation(depth)}  }`;
+  return `{\n${convertedToString}\n${addTabulation(depth)}}`;
 };
 
 const convertArrayToString = (array) => {
@@ -41,18 +40,17 @@ const renderValue = (value, depth) => {
 };
 
 
-export const renderNested = (ast, tabulation = 1) => {
+export const renderNested = (ast, tabulation = 0) => {
   const renderTypeDispatch = {
-    nested: (item, depth) => `${addTabulation(depth)}  ${item.key}: ${renderNested(item.children, depth + 1)}`,
-    unchanged: (item, depth) => `${addTabulation(depth)}  ${item.key}: ${renderValue(item.value, depth)}`,
-    removed: (item, depth) => `${addTabulation(depth)}- ${item.key}: ${renderValue(item.value, depth)}`,
-    added: (item, depth) => `${addTabulation(depth)}+ ${item.key}: ${renderValue(item.value, depth)}`,
-    modified: (item, depth) => `${addTabulation(depth)}+ ${item.key}: ${renderValue(item.newValue, depth)}\n${addTabulation(depth)}- ${item.key}: ${renderValue(item.oldValue, depth)}`,
+    nested: (item, depth) => `${addTabulation(depth + 1)}  ${item.key}: ${renderNested(item.children, depth + 2)}`,
+    unchanged: (item, depth) => `${addTabulation(depth + 1)}  ${item.key}: ${renderValue(item.value, depth + 2)}`,
+    removed: (item, depth) => `${addTabulation(depth + 1)}- ${item.key}: ${renderValue(item.value, depth + 2)}`,
+    added: (item, depth) => `${addTabulation(depth + 1)}+ ${item.key}: ${renderValue(item.value, depth + 2)}`,
+    modified: (item, depth) => `${addTabulation(depth + 1)}+ ${item.key}: ${renderValue(item.newValue, depth + 2)}\n${addTabulation(depth + 1)}- ${item.key}: ${renderValue(item.oldValue, depth + 2)}`,
   };
   const eachNodeAsString = ast.map((node) => renderTypeDispatch[node.type](node, tabulation));
-  const adjustedTabulationForBrackets = tabulation - 0.5;
   const result = eachNodeAsString.join('\n');
-  return `{\n${result}\n${addTabulation(adjustedTabulationForBrackets)}}`;
+  return `{\n${result}\n${addTabulation(tabulation)}}`;
 };
 
 export default renderNested;
