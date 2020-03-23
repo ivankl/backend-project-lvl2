@@ -20,13 +20,13 @@ const сonvertObjectToString = (object, depth) => {
 };
 
 const convertArrayToString = (array) => {
-  const eachElementsAsString = array.map((element) => {
+  const eachElementAsString = array.map((element) => {
     if (_.isArray(element)) {
       return convertArrayToString(element);
     }
     return element;
   });
-  const convertedToString = eachElementsAsString.join(', ');
+  const convertedToString = eachElementAsString.join(', ');
   return `[${convertedToString}]`;
 };
 
