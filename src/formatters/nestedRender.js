@@ -9,53 +9,50 @@ const addTabulation = (depth) => {
 
 const сonvertObjectToString = (object, depth) => {
   const keys = Object.keys(object);
-  const convertedToString = keys.reduce((acc, key) => {
+  const eachValueToString = keys.map((key) => {
     if (_.isObject(object[key]) && !_.isArray(object[key])) {
-      return `${acc}${addTabulation(depth + 1)}  ${key}: ${сonvertObjectToString(object[key], depth + 1)}`;
+      return `${addTabulation(depth + 1)}  ${key}: ${сonvertObjectToString(object[key], depth + 1)}`;
     }
-    return `${acc}${addTabulation(depth + 1)}  ${key}: ${object[key]}\n`;
-  }, '{\n');
-  return `${convertedToString}${addTabulation(depth)}  }\n`;
+    return `${addTabulation(depth + 1)}  ${key}: ${object[key]}`;
+  });
+  const convertedToString = eachValueToString.join('\n');
+  return `{\n${convertedToString}\n${addTabulation(depth)}  }`;
 };
 
 const convertArrayToString = (array) => {
-  const elementsAsString = array.reduce((acc, element) => {
+  const eachElementsAsString = array.map((element) => {
     if (_.isArray(element)) {
-      return `${acc}, ${convertArrayToString(element)}`;
+      return convertArrayToString(element);
     }
-    return `${acc}, ${element}`;
-  }, '');
-  const result = `[${elementsAsString.substr(1)}]`;
-  return result;
+    return element;
+  });
+  const convertedToString = eachElementsAsString.join(', ');
+  return `[${convertedToString}]`;
 };
 
 const renderValue = (value, depth) => {
   if (_.isArray(value)) {
-    return `${convertArrayToString(value)}\n`;
+    return convertArrayToString(value);
   }
   if (!(_.isArray(value)) && _.isObject(value)) {
     return сonvertObjectToString(value, depth);
   }
-  return `${value}\n`;
+  return value;
 };
 
 
-const renderTypeDispatch = {
-  unchanged: (item, depth) => `  ${item.key}: ${renderValue(item.value, depth)}`,
-  removed: (item, depth) => `- ${item.key}: ${renderValue(item.value, depth)}`,
-  added: (item, depth) => `+ ${item.key}: ${renderValue(item.value, depth)}`,
-  modified: (item, depth) => `+ ${item.key}: ${renderValue(item.newValue, depth)}${addTabulation(depth)}- ${item.key}: ${renderValue(item.oldValue, depth)}`,
-};
-
-export const renderNested = (ast, depth = 1) => {
-  const adjustedDepthForBrackets = depth - 0.5;
-  const result = ast.reduce((acc, node) => {
-    if (node.type === 'nested') {
-      return `${acc}${addTabulation(depth)}  ${node.key}: ${renderNested(node.children, depth + 1)}`;
-    }
-    return `${acc}${addTabulation(depth)}${renderTypeDispatch[node.type](node, depth)}`;
-  }, '{\n');
-  return `${result}${addTabulation(adjustedDepthForBrackets)}}\n`;
+export const renderNested = (ast, tabulation = 1) => {
+  const renderTypeDispatch = {
+    nested: (item, depth) => `${addTabulation(depth)}  ${item.key}: ${renderNested(item.children, depth + 1)}`,
+    unchanged: (item, depth) => `${addTabulation(depth)}  ${item.key}: ${renderValue(item.value, depth)}`,
+    removed: (item, depth) => `${addTabulation(depth)}- ${item.key}: ${renderValue(item.value, depth)}`,
+    added: (item, depth) => `${addTabulation(depth)}+ ${item.key}: ${renderValue(item.value, depth)}`,
+    modified: (item, depth) => `${addTabulation(depth)}+ ${item.key}: ${renderValue(item.newValue, depth)}\n${addTabulation(depth)}- ${item.key}: ${renderValue(item.oldValue, depth)}`,
+  };
+  const eachNodeAsString = ast.map((node) => renderTypeDispatch[node.type](node, tabulation));
+  const adjustedTabulationForBrackets = tabulation - 0.5;
+  const result = eachNodeAsString.join('\n');
+  return `{\n${result}\n${addTabulation(adjustedTabulationForBrackets)}}`;
 };
 
 export default renderNested;

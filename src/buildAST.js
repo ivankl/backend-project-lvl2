@@ -4,7 +4,7 @@ const areBothItemsArrays = (item1, item2) => _.isArray(item1) && _.isArray(item2
 
 const areBothItemsObjects = (item1, item2) => _.isObject(item1) && _.isObject(item2);
 
-export const areBothItemsNested = (item1, item2) => !(areBothItemsArrays(item1, item2))
+const areBothItemsNested = (item1, item2) => !(areBothItemsArrays(item1, item2))
   && areBothItemsObjects(item1, item2);
 
 const buildNode = (object1, object2, key, fn) => {
@@ -28,7 +28,7 @@ const buildNode = (object1, object2, key, fn) => {
   };
 };
 
-export const buildAST = (object1, object2) => {
+const buildAST = (object1, object2) => {
   const allUsedKeys = _.union(Object.keys(object1), Object.keys(object2));
   return allUsedKeys.map((key) => buildNode(object1, object2, key, buildAST));
 };

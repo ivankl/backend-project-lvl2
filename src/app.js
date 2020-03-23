@@ -17,6 +17,6 @@ export default () => {
     .description('Compares two configuration files and shows a difference.')
     .arguments('<firstConfig> <secondConfig>')
     .option('-f, --format [type]', 'output format', validateFormat, 'nested')
-    .action((config1, config2) => console.log(genDiff(config1, config2, programm.format)))
+    .action((config1, config2) => console.log(`${genDiff(config1, config2, programm.format)}\n`))
     .parse(process.argv);
 };

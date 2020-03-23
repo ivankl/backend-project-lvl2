@@ -10,13 +10,6 @@ const renderValue = (value) => {
   return value;
 };
 
-const renderTypeDispatch = {
-  unchanged: () => '',
-  removed: (item, fullPath) => `Property '${fullPath}' was deleted\n`,
-  added: (item, fullPath) => `Property '${fullPath}' was added with value: ${renderValue(item.value)}\n`,
-  modified: (item, fullPath) => `Property '${fullPath}' was changed from ${renderValue(item.oldValue)} to ${renderValue(item.newValue)}\n`,
-};
-
 const generateFullPathToProperty = (parentPath, newElement) => {
   if (parentPath !== '') {
     return `${parentPath}.${newElement}`;
@@ -25,13 +18,21 @@ const generateFullPathToProperty = (parentPath, newElement) => {
 };
 
 export const renderPlain = (ast, parent = '') => {
+  const renderTypeDispatch = {
+    nested: (item, fullPath) => renderPlain(item.children, fullPath),
+    unchanged: () => null,
+    removed: (item, fullPath) => `Property '${fullPath}' was deleted`,
+    added: (item, fullPath) => `Property '${fullPath}' was added with value: ${renderValue(item.value)}`,
+    modified: (item, fullPath) => `Property '${fullPath}' was changed from ${renderValue(item.oldValue)} to ${renderValue(item.newValue)}`,
+  };
   const result = ast.reduce((acc, item) => {
-    if (item.type === 'nested') {
-      return `${acc}${renderPlain(item.children, generateFullPathToProperty(parent, item.key))}`;
+    const value = renderTypeDispatch[item.type](item, generateFullPathToProperty(parent, item.key));
+    if (value !== null) {
+      acc.push(value);
     }
-    return `${acc}${renderTypeDispatch[item.type](item, generateFullPathToProperty(parent, item.key))}`;
-  }, '');
-  return `${result}`;
+    return acc;
+  }, []);
+  return result.join('\n');
 };
 
 export default renderPlain;
