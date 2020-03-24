@@ -40,7 +40,7 @@ const renderValue = (value, depth) => {
 };
 
 
-export const renderNested = (ast, tabulation = 0) => {
+const renderNested = (ast, tabulation = 0) => {
   const renderTypeDispatch = {
     nested: (item, depth) => `${addTabulation(depth + 2)}${item.key}: ${renderNested(item.children, depth + 2)}`,
     unchanged: (item, depth) => `${addTabulation(depth + 2)}${item.key}: ${renderValue(item.value, depth + 2)}`,

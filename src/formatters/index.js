@@ -1,5 +1,5 @@
-import { renderNested } from './nestedRender';
-import { renderPlain } from './plainRender';
+import renderNested from './nestedRender';
+import renderPlain from './plainRender';
 
 const outputFormatDispatch = {
   nested: renderNested,
