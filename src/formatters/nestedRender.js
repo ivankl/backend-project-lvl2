@@ -40,17 +40,17 @@ const renderValue = (value, depth) => {
 };
 
 
-const renderNested = (ast, tabulation = 0) => {
+const renderNested = (ast, depth = 0) => {
   const renderTypeDispatch = {
-    nested: (item, depth) => `${addTabulation(depth + 2)}${item.key}: ${renderNested(item.children, depth + 2)}`,
-    unchanged: (item, depth) => `${addTabulation(depth + 2)}${item.key}: ${renderValue(item.value, depth + 2)}`,
-    removed: (item, depth) => `${addTabulation(depth + 1)}- ${item.key}: ${renderValue(item.value, depth + 2)}`,
-    added: (item, depth) => `${addTabulation(depth + 1)}+ ${item.key}: ${renderValue(item.value, depth + 2)}`,
-    modified: (item, depth) => `${addTabulation(depth + 1)}+ ${item.key}: ${renderValue(item.newValue, depth + 2)}\n${addTabulation(depth + 1)}- ${item.key}: ${renderValue(item.oldValue, depth + 2)}`,
+    nested: (item, level) => `${addTabulation(level + 2)}${item.key}: ${renderNested(item.children, level + 2)}`,
+    unchanged: (item, level) => `${addTabulation(level + 2)}${item.key}: ${renderValue(item.value, level + 2)}`,
+    removed: (item, level) => `${addTabulation(level + 1)}- ${item.key}: ${renderValue(item.value, level + 2)}`,
+    added: (item, level) => `${addTabulation(level + 1)}+ ${item.key}: ${renderValue(item.value, level + 2)}`,
+    modified: (item, level) => `${addTabulation(level + 1)}+ ${item.key}: ${renderValue(item.newValue, level + 2)}\n${addTabulation(level + 1)}- ${item.key}: ${renderValue(item.oldValue, level + 2)}`,
   };
-  const eachNodeAsString = ast.map((node) => renderTypeDispatch[node.type](node, tabulation));
+  const eachNodeAsString = ast.map((node) => renderTypeDispatch[node.type](node, depth));
   const result = eachNodeAsString.join('\n');
-  return `{\n${result}\n${addTabulation(tabulation)}}`;
+  return `{\n${result}\n${addTabulation(depth)}}`;
 };
 
 export default renderNested;

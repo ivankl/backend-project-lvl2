@@ -8,17 +8,17 @@ const areBothItemsNested = (item1, item2) => !(areBothItemsArrays(item1, item2))
   && areBothItemsObjects(item1, item2);
 
 const buildNode = (object1, object2, key, fn) => {
-  if (areBothItemsNested(object1[key], object2[key])) {
-    return { key, type: 'nested', children: fn(object1[key], object2[key]) };
-  }
-  if (_.isEqual(object1[key], object2[key])) {
-    return { key, type: 'unchanged', value: object1[key] };
-  }
   if (!(_.has(object1, key))) {
     return { key, type: 'added', value: object2[key] };
   }
   if (!(_.has(object2, key))) {
     return { key, type: 'removed', value: object1[key] };
+  }
+  if (areBothItemsNested(object1[key], object2[key])) {
+    return { key, type: 'nested', children: fn(object1[key], object2[key]) };
+  }
+  if (_.isEqual(object1[key], object2[key])) {
+    return { key, type: 'unchanged', value: object1[key] };
   }
   return {
     key,
