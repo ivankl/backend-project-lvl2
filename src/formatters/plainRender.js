@@ -26,7 +26,7 @@ const renderPlain = (ast, parent = '') => {
     modified: (item, fullPath) => `Property '${fullPath}' was changed from ${renderValue(item.oldValue)} to ${renderValue(item.newValue)}`,
   };
   const result = ast
-    .map((node) => nodeDispatch[node.type](node, getFullPropertyPath(parent, node.key)), [])
+    .map((node) => nodeDispatch[node.type](node, getFullPropertyPath(parent, node.key)))
     .filter((value) => value !== null);
   return result.join('\n');
 };
